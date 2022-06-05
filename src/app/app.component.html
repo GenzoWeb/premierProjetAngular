@@ -1,7 +1,23 @@
-<nav>
-  <ul>
-     <li><a routerLink="/">Accueil</a></li>
-  </ul>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-3">
+    <div class="container-fluid px-5">
+      <a class="navbar-brand" [routerLink]="'/'">API</a>
+      <button [ngClass]="isMenuCollapsed ? 'collapsed' : 'collapse'" class="navbar-toggler d-flex d-lg-none flex-column justify-content-around" type="button" (click)="isMenuCollapsed = !isMenuCollapsed">
+        <span class="toggler-icon top-bar"></span>
+        <span class="toggler-icon middle-bar"></span>
+        <span class="toggler-icon bottom-bar"></span>
+      </button>
+      <div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse flex-row-reverse">
+        <ul class="navbar-nav">
+          <li class="nav-item active p-2"> 
+            <a class="nav-link d-inline py-0" [routerLink]="'/'" (click)="isMenuCollapsed = true">Films</a>
+          </li>
+          <li class="nav-item p-2">
+            <a class="nav-link d-inline py-0" [routerLink]="'/'" (click)="isMenuCollapsed = true">Séries</a>
+          </li>
+        </ul>
+      </div>
+    </div>
 </nav>
-
-<router-outlet></router-outlet>
+<div class="container">
+  <router-outlet></router-outlet>
+</div>
