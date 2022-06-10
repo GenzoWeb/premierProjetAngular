@@ -1,1 +1,22 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+   --body-bg-color: #15202b;
+   --secondary-color: #91a7be;
+}
+
+body {
+   background-color: var(--body-bg-color) !important;
+   color: white !important;
+}
+
+a {
+   text-decoration: none !important;
+   transition: color 0.5s ease-out;
+}
+
+a:visited, a:focus, a:active {
+  color: inherit !important;
+}
+
+a:hover {
+   color: var(--secondary-color) !important;
+}

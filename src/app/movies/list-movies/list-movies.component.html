@@ -1,8 +1,18 @@
-<h1 class="text-center">Films du moment</h1>
-<div *ngIf='movies'>
-   <div *ngFor="let movie of movies">
-      <h2>{{ movie.title }}</h2>
-      <p>Popularité : {{ movie.popularity }}</p>
-      <a [routerLink]="['/film', movie.id]">En savoir plus</a>
+<h1 class="text-center mb-3">Films du moment</h1>
+<div *ngIf='movies else elseBlock'>
+   <div class="d-flex flex-wrap justify-content-between align-items-stretch">
+      <div *ngFor="let movie of movies; let index = index" class="mb-4">
+         <div class="card h-100 text-dark" style="width: 20rem;">
+            <a [routerLink]="['/film', movie.id]"><img class="card-img-top" src="{{ urlBaseImage }}{{ movie.poster_path }}" alt="Card image cap"></a>
+            <span class="badge card-note">{{ movie.vote_average }}</span>
+            <div class="card-body">
+               <a [routerLink]="['/film', movie.id]"><h6 class="card-title">{{ movie.title }}</h6></a>
+               <p class="card-text">Date de sortie : {{ movie.release_date | date:'dd/MM/Y'}}</p>
+            </div>
+         </div>
+      </div>
    </div>
 </div>
+<ng-template #elseBlock>
+   <p>Pas de films</p>
+</ng-template>

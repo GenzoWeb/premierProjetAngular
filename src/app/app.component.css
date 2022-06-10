@@ -1,8 +1,25 @@
+.navbar-app {
+   border-top: 1px solid var(--secondary-color);
+}
+
+.navbar-brand, .nav-link {
+   transition: color 0.5s ease-out;
+}
+
+.navbar-brand:hover {
+   color: var(--secondary-color);
+}
+
+.nav-link:hover {
+   color: var(--secondary-color) !important;
+}
+
 .navbar-toggler {
    width: 20px;
    height: 20px;
    position: relative;
    transition: .5s ease-in-out;
+   margin: 10px 0;
 }
 
 .navbar-toggler,
@@ -12,7 +29,7 @@
    outline: none;
    box-shadow: none;
    border: 0;
-   /* position: relative; */
+   position: relative;
 }
 
 .navbar-toggler span {
@@ -25,12 +42,16 @@
    position: absolute;
    height: 3px;
    width: 100%;
-   background: grey;
+   background: white;
    border-radius: 1px;
    opacity: 1;
    left: 0;
    transform: rotate(0deg);
    transition: .25s ease-in-out;
+}
+
+.navbar-toggler:hover > .toggler-icon{
+   background: var(--secondary-color);
 }
 
 .middle-bar {
@@ -41,20 +62,18 @@
 /* when navigation is clicked */
 
 .navbar-toggler .top-bar {
-   /* top: inherit; */
-   margin-top: 0px;
+   top: inherit;
    transform: rotate(135deg);
 }
 
 .navbar-toggler .middle-bar {
    opacity: 0;
-   /* top: inherit; */
+   top: inherit;
    filter: alpha(opacity=0);
 }
 
 .navbar-toggler .bottom-bar {
-   /* top: inherit; */
-   margin-top: 0px;
+   top: inherit;
    transform: rotate(-135deg);
 }
 
@@ -62,24 +81,25 @@
 /* State when the navbar is collapsed */
 
 .navbar-toggler.collapsed .top-bar {
-   /* position: absolute;
-   top: 0px; */
-
-   margin-top: -20px;
+   position: absolute;
+   top: 0px;
    transform: rotate(0deg);
 }
 
 .navbar-toggler.collapsed .middle-bar {
    opacity: 1;
-   /* position: absolute; */
-   /* top: 10px; */
+   position: absolute;
+   top: 10px;
    filter: alpha(opacity=100);
 }
 
 .navbar-toggler.collapsed .bottom-bar {
-   /* position: absolute; */
-   /* top: 20px; */
-
-   margin-top: 20px;
+   position: absolute;
+   top: 20px;
    transform: rotate(0deg);
+}
+
+.nav-bg-small-screen {
+   background-color: var(--secondary-color);
+   border-bottom: 1px solid var(--body-bg-color);
 }

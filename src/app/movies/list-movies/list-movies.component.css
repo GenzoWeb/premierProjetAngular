@@ -1,0 +1,33 @@
+
+.card {
+   background-color: var(--secondary-color);
+   transition: background-color 0.5s ease-out;
+}
+
+.card:hover {
+   background-color: white;
+}
+
+.card-note {
+   position: absolute;
+   right: 0;
+   top: -10px;
+   background-color: var(--secondary-color) !important;
+   color: var(--body-bg-color);
+}
+
+.genre {
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: flex-end;
+}
+
+.badge {
+   background-color: var(--body-bg-color) ;
+   height: 25px;
+   border-radius: 50% !important;
+}
+
+.card-title:hover {
+   color: black
+}
