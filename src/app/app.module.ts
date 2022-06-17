@@ -7,12 +7,18 @@ import { AppComponent } from './app.component';
 import { ListMoviesComponent } from './movies/list-movies/list-movies.component';
 import { DetailMovieComponent } from './movies/detail-movie/detail-movie.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SafePipe } from './movies/pipe/safe.pipe';
+import { ConvertHoursPipe } from './movies/pipe/convert-hours.pipe';
+import { StyleSpacePipe } from './movies/pipe/style-space.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     ListMoviesComponent,
-    DetailMovieComponent
+    DetailMovieComponent,
+    SafePipe,
+    ConvertHoursPipe,
+    StyleSpacePipe
   ],
   imports: [
     BrowserModule,

@@ -1,8 +1,12 @@
+.title-app:hover {
+   color: var(--secondary-color) !important;
+}
+
 .navbar-app {
    border-top: 1px solid var(--secondary-color);
 }
 
-.navbar-brand, .nav-link {
+.navbar-brand, .nav-link, .title-app {
    transition: color 0.5s ease-out;
 }
 

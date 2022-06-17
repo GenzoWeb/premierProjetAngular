@@ -1,11 +1,19 @@
 
 .card {
    background-color: var(--secondary-color);
+   cursor: pointer;
    transition: background-color 0.5s ease-out;
+   margin-left: 2px;
+   margin-right: 2px;
 }
 
 .card:hover {
    background-color: white;
+}
+
+.card-img-top {
+   min-height: 480px;
+   height: auto;
 }
 
 .card-note {
@@ -16,18 +24,17 @@
    color: var(--body-bg-color);
 }
 
-.genre {
-   display: flex;
-   flex-wrap: wrap;
-   justify-content: flex-end;
-}
-
 .badge {
    background-color: var(--body-bg-color) ;
    height: 25px;
    border-radius: 50% !important;
 }
 
-.card-title:hover {
-   color: black
+.card-body {
+   color: var(--body-bg-color) !important;
+}
+
+.loading {
+   margin-top: 30px;
+   text-align: center;
 }

@@ -3,8 +3,9 @@ import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
+import { Actors } from './interface/actors';
 import { Movie } from './interface/movie';
-import { ResultApi } from './interface/result-api';
+import { MoviesList } from './interface/movies-list';
 
 @Injectable({
   providedIn: 'root'
@@ -16,15 +17,32 @@ export class MoviesService {
 
   constructor(private http: HttpClient) { }
 
-  getMovies(): Observable<ResultApi> {
+  getMovies(): Observable<MoviesList> {
     const startDate: string = this.dateSet(true);
     const endDate: string = this.dateSet();
 
-    return this.http.get<ResultApi>(`https://api.themoviedb.org/3/discover/movie?api_key=${this.APIKey}&primary_release_date.gte=${startDate}-01&primary_release_date.lte=${endDate}-25&language=fr-FR`).pipe(tap((response) => this.log(response.results)))
+    return this.http.get<MoviesList>(`https://api.themoviedb.org/3/movie/now_playing?api_key=${this.APIKey}&primary_release_date.gte=${startDate}-20&primary_release_date.lte=${endDate}-25&language=fr-FR`).pipe(
+      tap((response) => this.log(response.results)))
   }
 
   getMovieById(id:number): Observable<Movie> {
-    return this.http.get<Movie>(`https://api.themoviedb.org/3/movie/${id}?api_key=${this.APIKey}&language=fr-FR`).pipe(tap((response) => this.log(response)))
+    return this.http.get<Movie>(`https://api.themoviedb.org/3/movie/${id}?api_key=${this.APIKey}&language=fr-FR`).pipe(
+      tap((response) => this.log(response)))
+  }
+
+  getGenresList(): Observable<Movie> {
+    return this.http.get<Movie>(`https://api.themoviedb.org/3/genre/movie/list?api_key=${this.APIKey}&language=fr-FR`).pipe(
+      tap((response) => this.log(response)))
+  }
+
+  getActorsbyMovie(id:number): Observable<Actors> {
+    return this.http.get<Actors>(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=${this.APIKey}&language=fr-FR`).pipe(
+      tap((response) => this.log(response)))
+  }
+
+  getVideosMovie(id:number): Observable<Movie> {
+    return this.http.get<Movie>(`https://api.themoviedb.org/3/movie/${id}/videos?api_key=${this.APIKey}&language=fr-FR`).pipe(
+      tap((response) => this.log(response)))
   }
 
   private dateSet(param:boolean = false): string {

@@ -1,5 +1,45 @@
-<h1>description d'un film !</h1>
-<div *ngIf='movie'>
-   <h2>{{ movie.title }}</h2>
-   <p>{{ movie.overview }}</p>
+<div class="container">
+   <div *ngIf="movie; else elseBlock">
+      <h2 class="text-center">{{ movie.title }}</h2>
+      <div class="d-lg-flex mt-4">
+         <div class="text-center mb-4" *ngIf="movie.poster_path; else elseBlockImage">
+            <img class="image-movie" src="{{ urlBaseImage }}{{ movie.poster_path }}" alt="Image film">
+         </div>
+         <div class="mx-3">
+            <p>sortie le {{ movie.release_date | date:'dd/MM/Y' }} / {{ movie.runtime | convertHours }} / <span *ngFor="let genre of movie.genres; let index = index">{{ genre.name | styleSpace: index : movie.genres.length }}</span></p>
+            <div>
+               <div>
+                  <h5>Avec</h5>
+                  <p *ngIf="actors; else elseActorsBlock"><span *ngFor="let actor of actors | slice: 0 : 5; let index = index">{{actor.name | styleSpace: index : 5 }}</span></p>
+               </div>
+            </div>
+            <h5>Synopsis</h5>
+            <p>{{ movie.overview }}</p>
+         </div>
+      </div>
+      <div *ngIf="videos && videos.length !== 0">
+         <h5 class="text-center">Vidéos</h5>
+         <div class="d-flex flex-wrap justify-content-center mt-4">
+            <div *ngFor="let video of videos">
+               <iframe class="mx-1 mb-4" width="400" height="225" [src]= "urlBaseVideo + video.key | safe" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+         </div>
+      </div>
+   </div>
 </div>
+
+<!-- ******* Blocks Else ******* -->
+
+<ng-template #elseBlockImage>
+   <img class="" src="{{ urlTestImage }}" alt="image cinema">
+</ng-template> 
+
+<ng-template #elseBlock>
+   <div class="loading">
+      <div class="spinner-border" role="status"></div>
+   </div>
+</ng-template>
+
+<ng-template #elseActorsBlock>
+   <span>À venir ...</span>
+</ng-template>

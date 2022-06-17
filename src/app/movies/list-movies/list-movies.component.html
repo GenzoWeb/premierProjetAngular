@@ -1,18 +1,49 @@
-<h1 class="text-center mb-3">Films du moment</h1>
-<div *ngIf='movies else elseBlock'>
-   <div class="d-flex flex-wrap justify-content-between align-items-stretch">
-      <div *ngFor="let movie of movies; let index = index" class="mb-4">
-         <div class="card h-100 text-dark" style="width: 20rem;">
-            <a [routerLink]="['/film', movie.id]"><img class="card-img-top" src="{{ urlBaseImage }}{{ movie.poster_path }}" alt="Card image cap"></a>
-            <span class="badge card-note">{{ movie.vote_average }}</span>
-            <div class="card-body">
-               <a [routerLink]="['/film', movie.id]"><h6 class="card-title">{{ movie.title }}</h6></a>
-               <p class="card-text">Date de sortie : {{ movie.release_date | date:'dd/MM/Y'}}</p>
-            </div>
+<div class="container">
+   <h1 class="text-center mb-3">Films du moment</h1>
+   <div *ngIf="movies; else elseBlock">
+      <div class="d-flex flex-wrap justify-content-center align-items-stretch">
+         <div *ngFor="let movie of movies" class="mb-4">
+            <span *ngIf="movie.genre_ids.indexOf(documentary) == -1">
+               <div [routerLink]="['/film', movie.id]" class="card h-100 text-dark" style="width: 20rem;">
+                  <div *ngIf="movie.poster_path; else elseBlockImage">
+                     <img class="card-img-top" src="{{ urlBaseImage }}{{ movie.poster_path }}" alt="Image film">
+                  </div>        
+                  <div *ngIf="movie.vote_average >= 1; else elseBlockNote">
+                     <span class="badge card-note">{{ movie.vote_average }}</span>
+                  </div>
+                  <div class="card-body">
+                     <h6>{{ movie.title }}</h6>
+                     <p>Date de sortie : {{ movie.release_date | date:'dd/MM/Y' }}</p>
+                     <div *ngIf="genresTest">
+                        <div class="d-flex justify-content-end flex-wrap mb-3">
+                           <div *ngFor="let genre of genresTest;">
+                              <div *ngIf="movie.genre_ids.indexOf(genre.id) !== -1">
+                                 <span class="badge badge-pill mx-1">{{ genre.name }}</span>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </span>
          </div>
       </div>
    </div>
 </div>
+
+
+<!-- ******* Blocks Else ******* -->
+
 <ng-template #elseBlock>
-   <p>Pas de films</p>
+   <div class="loading">
+      <div class="spinner-border" role="status"></div>
+   </div>
+</ng-template>
+
+<ng-template #elseBlockImage>
+   <img class="card-img-top" src="{{ urlTestImage }}" alt="image cinema">
+</ng-template>
+
+<ng-template #elseBlockNote>
+   <span class="badge card-note">...</span>
 </ng-template>
