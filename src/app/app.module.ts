@@ -7,24 +7,40 @@ import { AppComponent } from './app.component';
 import { ListMoviesComponent } from './movies/list-movies/list-movies.component';
 import { DetailMovieComponent } from './movies/detail-movie/detail-movie.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { SafePipe } from './movies/pipe/safe.pipe';
-import { ConvertHoursPipe } from './movies/pipe/convert-hours.pipe';
-import { StyleSpacePipe } from './movies/pipe/style-space.pipe';
+import { NetflixComponent } from './tv/netflix/netflix.component';
+import { NetflixNavbarComponent } from './tv/netflix-navbar/netflix-navbar.component';
+import { MoviesNavbarComponent } from './movies/movies-navbar/movies-navbar.component';
+import { PageNotFoundComponent } from './404/page-not-found/page-not-found.component';
+import { BackgroundNavbarDirective } from './tv/background-navbar.directive';
+import { SafePipe } from './pipe/safe.pipe';
+import { ConvertHoursPipe } from './pipe/convert-hours.pipe';
+import { StyleSpacePipe } from './pipe/style-space.pipe';
+import { TruncateTextPipe } from './pipe/truncate-text.pipe';
+import { InfosSerieComponent } from './tv/netflix/infos-serie/infos-serie.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
     ListMoviesComponent,
     DetailMovieComponent,
+    NetflixComponent,
+    NetflixNavbarComponent,
     SafePipe,
     ConvertHoursPipe,
-    StyleSpacePipe
+    StyleSpacePipe,
+    MoviesNavbarComponent,
+    PageNotFoundComponent,
+    BackgroundNavbarDirective,
+    TruncateTextPipe,
+    InfosSerieComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    NgbModule
+    NgbModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

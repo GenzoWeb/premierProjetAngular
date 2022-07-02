@@ -1,4 +1,3 @@
-import { Genre } from "./genre";
 import { MovieClip } from "./movie-clip";
 
 export interface Movie {
@@ -20,3 +19,8 @@ export interface Movie {
    runtime: number;
    results: MovieClip[];
 }
+
+export interface Genre {
+   id: number;
+   name: string;
+ }

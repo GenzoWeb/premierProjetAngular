@@ -1,4 +1,5 @@
-<div class="container">
+<div class="container min-vh-100">
+   <app-movies-navbar></app-movies-navbar>
    <div *ngIf="movie; else elseBlock">
       <h2 class="text-center">{{ movie.title }}</h2>
       <div class="d-lg-flex mt-4">
@@ -6,15 +7,17 @@
             <img class="image-movie" src="{{ urlBaseImage }}{{ movie.poster_path }}" alt="Image film">
          </div>
          <div class="mx-3">
-            <p>sortie le {{ movie.release_date | date:'dd/MM/Y' }} / {{ movie.runtime | convertHours }} / <span *ngFor="let genre of movie.genres; let index = index">{{ genre.name | styleSpace: index : movie.genres.length }}</span></p>
+            <p>sortie le {{ movie.release_date | date:'dd/MM/Y' }} | {{ movie.runtime | convertHours }} | <span *ngFor="let genre of movie.genres; let index = index">{{ genre.name | styleSpace: index : movie.genres.length }}</span></p>
             <div>
                <div>
                   <h5>Avec</h5>
-                  <p *ngIf="actors; else elseActorsBlock"><span *ngFor="let actor of actors | slice: 0 : 5; let index = index">{{actor.name | styleSpace: index : 5 }}</span></p>
+                  <p *ngIf="actors; else elseComing"><span *ngFor="let actor of actors | slice: 0 : 5; let index = index">{{actor.name | styleSpace: index : 5 }}</span></p>
                </div>
             </div>
             <h5>Synopsis</h5>
-            <p>{{ movie.overview }}</p>
+            <div *ngIf="movie.overview; else elseComing">
+               <p>{{ movie.overview }}</p>
+            </div>
          </div>
       </div>
       <div *ngIf="videos && videos.length !== 0">
@@ -40,6 +43,6 @@
    </div>
 </ng-template>
 
-<ng-template #elseActorsBlock>
+<ng-template #elseComing>
    <span>À venir ...</span>
 </ng-template>

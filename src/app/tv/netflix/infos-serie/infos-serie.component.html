@@ -1,0 +1,84 @@
+<div *ngIf="serie">
+   <div class="cover-infos">
+      <img class="img-infos w-100" src="{{ urlBaseImage }}{{ serie.backdrop_path }}" alt="image cinema">
+      <p class="serie-title ms-5">{{ serie.name | uppercase }}</p>
+      <div class="cloudy"></div>
+   </div>
+   <div class="px-5">
+      <div class="header-infos">
+         <div>
+            <div class="my-3">
+               <span class="text-vote me-2">Note moyenne : {{ serieVote }}</span>
+               <span class="me-2">{{ serie.first_air_date | date:'Y'}}</span>
+               <span>{{ serie.number_of_seasons }} Saison<span *ngIf="serie.number_of_seasons > 1">s</span></span>
+            </div>
+            <p class="mt-3 mb-2">{{ serie.overview }}</p>
+         </div>
+         <div class="detail d-flex flex-column">
+            <p class="my-2" *ngIf="actors"><span class="title-detail">Distribution : </span> <span *ngFor="let actor of actors | slice: 0 : 5; let index = index">{{actor.name | styleSpace: index : 5 }}</span></p>
+            <p class="my-2"><span class="title-detail">Genre : </span> <span *ngFor="let genre of serie.genres; let index = index">{{ genre.name | styleSpace: index : serie.genres.length }}</span></p>
+         </div>
+      </div>
+      <div class="mt-5 mb-4">
+         <div class="d-flex justify-content-between align-items-baseline">
+            <h1 id="title-episodes">Épisodes</h1>
+            <div *ngIf="serie.number_of_seasons > 1 else elseBlockSeason">
+               <nav class="navbar navbar-expand-md">
+                  <div class="navbar-collapse" [class.collapse]="collapsed" id="navbarContent">
+                     <ul class="navbar-nav ms-auto">
+                        <li class="nav-item" ngbDropdown placement="top-end">
+                           <div *ngIf="!listEpisodes">
+                              <button (click)="rotateDropdown();" type="button" class="btn list-episodes" id="dropdownBasic1" ngbDropdownToggle><span class="name-season">{{ serie.seasons[0].name }} <span><svg [ngClass]="status ? 'drop-svg-trans' : ''" xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-caret-down-fill drop-svg" viewBox="0 0 16 16">
+                                 <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+                               </svg></span></span></button>
+                           </div>
+                           <div *ngIf="listEpisodes">
+                              <button (click)="rotateDropdown();" type="button" class="btn list-episodes" id="dropdownBasic1" ngbDropdownToggle><span class="name-season">{{ nameSeason }} <span><svg [ngClass]="status ? 'drop-svg-trans' : ''" xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-caret-down-fill drop-svg" viewBox="0 0 16 16">
+                                 <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+                               </svg></span></span></button>
+                           </div>
+                           <div id="episodes-dropdown" ngbDropdownMenu aria-labelledby="navbarDropdown2" class="dropdown-menu dropdown-menu-end">
+                              <button class="list-season" (click)="listEpisodes = true; nameSeason = season.name;changeSelect(season.season_number);rotateDropdown()" ngbDropdownItem *ngFor="let season of serie.seasons">{{ season.name }} ({{ season.episode_count }} épisodes)</button>
+                           </div>
+                        </li>
+                     </ul>
+                  </div>
+               </nav>
+            </div>
+         </div>
+      </div>
+      <div *ngIf="episode" class="episodes mt-4">
+         <div *ngFor="let ep of episode.episodes">
+            <div class="d-flex episode flex-wrap flex-sm-nowrap">
+               <div class="number-episode">
+                  {{ ep.episode_number }}
+               </div>
+               <div *ngIf="ep.still_path else elseBlockStilPath">
+                  <img class="img-episode" src="{{ urlBaseImageEpisode }}{{ ep.still_path }}" alt="image épisode">
+               </div>
+               <div>
+                  <div *ngIf="ep.name.substring(0,7) !== 'Épisode' else elseBlockTitleEpisode">
+                     <p class="title-episode">{{ ep.name }}</p>
+                  </div>
+                  <div *ngIf="ep.overview" class="overview-episode">
+                     <p>{{ ep.overview }}</p>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+
+<ng-template #elseBlockSeason>
+   <span class="name-season">Saison 1</span>
+</ng-template>
+
+<ng-template #elseBlockStilPath>
+   <img class="img-episode" src="{{ urlTestImage }}" alt="image épisode" width="185px">
+</ng-template>
+
+<ng-template #elseBlockTitleEpisode>
+   <p class="title-episode">À venir ...</p>
+</ng-template>
+

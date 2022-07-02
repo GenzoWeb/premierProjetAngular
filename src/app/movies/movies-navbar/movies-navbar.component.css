@@ -18,6 +18,10 @@
    color: var(--secondary-color) !important;
 }
 
+.active {
+   color: var(--secondary-color);
+}
+
 .navbar-toggler {
    width: 20px;
    height: 20px;

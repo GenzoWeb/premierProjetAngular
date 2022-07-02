@@ -17,3 +17,11 @@ a {
 a:visited, a:focus, a:active {
   color: inherit !important;
 }
+
+li {
+   list-style: none;
+}
+
+button:focus {
+   box-shadow: none !important;
+}

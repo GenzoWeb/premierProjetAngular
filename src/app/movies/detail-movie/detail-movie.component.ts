@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
-import { Cast } from '../interface/cast';
+import { Cast } from '../interface/actors';
 import { Movie } from '../interface/movie';
 import { MovieClip } from '../interface/movie-clip';
 import { MoviesService } from '../movies.service';
@@ -13,9 +12,9 @@ import { MoviesService } from '../movies.service';
 })
 export class DetailMovieComponent implements OnInit {
 
-  movie:  Movie | undefined;
-  actors:  Cast[] | undefined;
-  videos:  MovieClip[] | undefined;
+  movie?:  Movie;
+  actors?:  Cast[];
+  videos?:  MovieClip[];
   urlBaseImage: string = "https://image.tmdb.org/t/p/w500";
   urlTestImage: string = "assets/images/cinema.jpg";
   urlBaseVideo: string = "https://www.youtube.com/embed/";
