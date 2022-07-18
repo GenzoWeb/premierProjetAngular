@@ -1,0 +1,83 @@
+.series-by-genres {
+   padding: 0 4%;
+}
+
+.name-genre {
+   margin-left: 12px;
+}
+
+.slider-wrap {
+   position: relative;
+}
+
+.slider-main {
+   position: relative;
+   display: flex;
+   transition: transform 1s;
+}
+
+.images-genre {
+   position: relative;
+   margin: 0 12px;
+   cursor: pointer;
+}
+
+.images-genre-img {
+   border-radius: 5px;
+}
+
+.images-genre-zoom {
+   position: absolute;
+   z-index: 10;
+   top: 0;
+   bottom: 0;
+   transition: all 0.3s ease-in-out;
+   transform: scale(0);
+}
+
+.images-genre-zoom img {
+   border-radius: 5px 5px 0 0;
+}
+
+.effect-image .images-genre-zoom {
+   transform:scale(1.25);
+   cursor: pointer;
+}
+
+.div-z-index {
+   z-index: 5;
+}
+
+.text-effect-img {
+   background-color: #181818;
+   box-shadow: rgb(0 0 0 / 75%) 0px 3px 10px;
+   border-radius: 0 0 5px 5px;
+   font-size: 10px;
+}
+
+.title-effect {
+   font-weight: 600;
+   font-size: 14px;
+}
+
+.right, .left {
+   position: absolute;
+   top: 50%;
+   transform: translate(-50%,-50%);
+   cursor: pointer;
+   color: white;
+   background-color: transparent;
+   border: none;
+   z-index: 5;
+   height: 100%;
+   background-color: rgba(0,0,0,0.4);
+   cursor: default;
+}
+
+.right {
+   right: -40px;
+}
+
+button svg {
+   cursor: pointer;
+}

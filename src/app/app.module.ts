@@ -18,6 +18,11 @@ import { StyleSpacePipe } from './pipe/style-space.pipe';
 import { TruncateTextPipe } from './pipe/truncate-text.pipe';
 import { InfosSerieComponent } from './tv/netflix/infos-serie/infos-serie.component';
 import { FormsModule } from '@angular/forms';
+import { SeriesByGenresComponent } from './tv/netflix/series-by-genres/series-by-genres.component';
+import { EffectZoomImgDirective } from './tv/effect-zoom-img.directive';
+import { NextDirective } from './tv/next.directive';
+import { PrevDirective } from './tv/prev.directive';
+import { SliderDirective } from './tv/slider.directive';
 
 @NgModule({
   declarations: [
@@ -33,7 +38,12 @@ import { FormsModule } from '@angular/forms';
     PageNotFoundComponent,
     BackgroundNavbarDirective,
     TruncateTextPipe,
-    InfosSerieComponent
+    InfosSerieComponent,
+    SeriesByGenresComponent,
+    EffectZoomImgDirective,
+    NextDirective,
+    PrevDirective,
+    SliderDirective
   ],
   imports: [
     BrowserModule,

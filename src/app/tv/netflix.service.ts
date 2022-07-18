@@ -4,7 +4,7 @@ import { map, Observable, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Actors } from '../movies/interface/actors';
 import { SerieDescription } from './interface/serie-description';
-import { Serie, Series } from './interface/series';
+import { GenreTv, Serie, Series } from './interface/series';
 
 @Injectable({
   providedIn: 'root'
@@ -38,6 +38,20 @@ export class NetflixService {
 
   getListEpisodes(id:number,season:number) {
     return this.http.get<Actors>(`https://api.themoviedb.org/3/tv/${id}/season/${season}?api_key=${this.APIKey}&language=fr-FR`).pipe(
+      tap((response) => this.log(response))
+    )
+  }
+
+  getGenresListTv(): Observable<GenreTv[]> {
+    return this.http.get<Serie>(`https://api.themoviedb.org/3/genre/tv/list?api_key=${this.APIKey}&language=fr-FR`).pipe(
+      map(series => series.genres),
+      tap((response) => this.log(response))
+    )
+  }
+
+  getSeriesByGenres(id:number): Observable<Serie[]> {
+    return this.http.get<Series>(`https://api.themoviedb.org/3/discover/tv?api_key=${this.APIKey}&with_genres=${id}&language=fr-FR`).pipe(
+      map(series => series.results),
       tap((response) => this.log(response))
     )
   }

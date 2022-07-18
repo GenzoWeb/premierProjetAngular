@@ -60,7 +60,10 @@
                   <div *ngIf="ep.name.substring(0,7) !== 'Épisode' else elseBlockTitleEpisode">
                      <p class="title-episode">{{ ep.name }}</p>
                   </div>
-                  <div *ngIf="ep.overview" class="overview-episode">
+                  <ng-template #elseBlockTitleEpisode>
+                     <p class="title-episode">Épisode {{ ep.episode_number }}</p>
+                  </ng-template>
+                  <div *ngIf="ep.overview" else elseBlockOverviewEpisode class="overview-episode">
                      <p>{{ ep.overview }}</p>
                   </div>
                </div>
@@ -78,7 +81,7 @@
    <img class="img-episode" src="{{ urlTestImage }}" alt="image épisode" width="185px">
 </ng-template>
 
-<ng-template #elseBlockTitleEpisode>
+<ng-template #elseBlockOverviewEpisode>
    <p class="title-episode">À venir ...</p>
 </ng-template>
 

@@ -19,4 +19,10 @@ export interface Serie {
    poster_path?: string;
    vote_average: number;
    vote_count: number;
+   genres: GenreTv[];
+}
+
+export interface GenreTv {
+   id: number;
+   name: string;
 }

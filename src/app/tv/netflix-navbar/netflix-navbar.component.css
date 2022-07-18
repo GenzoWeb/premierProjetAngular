@@ -66,3 +66,35 @@
       overflow: inherit;
    }
 }
+
+@media screen and (max-width: 500px)
+{
+   .navbar {
+      position: relative;
+      display: flex;
+      flex-wrap: wrap-reverse;
+      justify-content: center;
+      padding-top: 50px;
+   }
+
+   .navbar-brand {
+      margin-right: unset !important;
+      position: absolute;
+      top: 0;
+      left: 50%;
+      margin-left: -45px;
+   }
+
+   .nav-secondary-netflix {
+      position: relative;
+      right: 0;
+   }
+
+   .nav-secondary-netflix ul {
+      padding-left: unset !important;
+   }
+
+   .navbar-toggler {
+      margin-top: 15px;
+   }
+}

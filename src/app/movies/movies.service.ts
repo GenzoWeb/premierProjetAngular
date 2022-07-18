@@ -21,9 +21,9 @@ export class MoviesService {
     const startDate: string = this.dateSet(true);
     const endDate: string = this.dateSet();
 
-    return this.http.get<MoviesList>(`https://api.themoviedb.org/3/movie/now_playing?api_key=${this.APIKey}&primary_release_date.gte=${startDate}-20&primary_release_date.lte=${endDate}-25&language=fr-FR`).pipe(
+    return this.http.get<MoviesList>(`https://api.themoviedb.org/3/movie/popular?api_key=${this.APIKey}&primary_release_date.gte=${startDate}-20&primary_release_date.lte=${endDate}-25&language=fr-FR`).pipe(
       map(movies => movies.results.sort((a:any,b:any) => 
-          new Date(b.release_date).getTime() - new Date(a.release_date).getTime())),
+        new Date(b.release_date).getTime() - new Date(a.release_date).getTime())),
       tap((response) => this.log(response))
     )
   }

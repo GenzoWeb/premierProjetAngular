@@ -3,6 +3,7 @@
    background-color: #141414;
    min-height: 100vh;
    overflow: hidden;
+   max-width: 100%;
 }
 
 .netflix-body-fixed {
@@ -44,23 +45,10 @@
    border-radius: 20px;
 }
 
-/* .button-cover {
-   padding: unset !important;
-   font-size: unset !important;
-}
-
-.button-cover svg {
-   margin: 10px 0 10px 10px;
-}
-
-.button-cover span {
-   margin: 10px 10px 10px 0;
-} */
-
 .vote-cover {
    position: absolute;
    right: 0;
-   bottom: 40%;
+   bottom: 30%;
    border: solid 3px #dcdcdc;
    border-style: none none none solid;
    background-color: rgba(51,51,51,.6);
@@ -126,5 +114,22 @@
 {
    .button-cover  {
       font-size: 1em;
+   }
+}
+
+@media screen and (max-width: 400px)
+{
+   .text-img-cover {
+      position: relative;
+      font-size: unset;
+      margin-left: unset !important;
+   }
+
+   .title-cover {
+      font-size: unset;
+   }
+
+   .button-cover {
+      font-size: 0.8em;
    }
 }
