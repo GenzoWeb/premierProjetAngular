@@ -23,6 +23,8 @@ import { EffectZoomImgDirective } from './tv/effect-zoom-img.directive';
 import { NextDirective } from './tv/next.directive';
 import { PrevDirective } from './tv/prev.directive';
 import { SliderDirective } from './tv/slider.directive';
+import { SeriesTopViewsComponent } from './tv/netflix/series-top-views/series-top-views.component';
+import { SliderSeriesComponent } from './tv/netflix/slider-series/slider-series.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +45,9 @@ import { SliderDirective } from './tv/slider.directive';
     EffectZoomImgDirective,
     NextDirective,
     PrevDirective,
-    SliderDirective
+    SliderDirective,
+    SeriesTopViewsComponent,
+    SliderSeriesComponent
   ],
   imports: [
     BrowserModule,

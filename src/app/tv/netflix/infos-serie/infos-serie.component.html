@@ -1,6 +1,6 @@
 <div *ngIf="serie">
    <div class="cover-infos">
-      <img class="img-infos w-100" src="{{ urlBaseImage }}{{ serie.backdrop_path }}" alt="image cinema">
+      <img *ngIf="serie.backdrop_path" class="img-infos w-100" src="{{ urlBaseImage }}{{ serie.backdrop_path }}" alt="image cinema">
       <p class="serie-title ms-5">{{ serie.name | uppercase }}</p>
       <div class="cloudy"></div>
    </div>

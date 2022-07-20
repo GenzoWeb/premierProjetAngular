@@ -34,7 +34,7 @@
       </div>
       <div *ngIf="genres">
          <div *ngFor="let genre of genres">
-            <app-series-by-genres [genreId]="genre.id" [genreName]="genre.name" (sendSerie)="receiveSerie($event)"></app-series-by-genres>
+            <app-series-by-genres [genreId]="genre.id" [genreName]="genre.name" (sendSerie)="receiveSerie($event)" ></app-series-by-genres>
          </div>
       </div>
    </div>

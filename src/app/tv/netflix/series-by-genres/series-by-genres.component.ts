@@ -64,10 +64,6 @@ export class SeriesByGenresComponent implements OnInit {
     return this.arrowRight = !this.arrowRight; 
   }
 
-  serieSend(serie:Serie) {
-    this.sendSerie.emit(serie)
-  }
-
   goRight() {
     this.currentImage++;
     this.arrowLeft = true;
@@ -99,5 +95,9 @@ export class SeriesByGenresComponent implements OnInit {
 
   sliderElementReceived(slider:HTMLElement) {
     this.slider = slider
+  }
+
+  receiveSerie(serie:Serie) {
+    this.sendSerie.emit(serie)
   }
 }

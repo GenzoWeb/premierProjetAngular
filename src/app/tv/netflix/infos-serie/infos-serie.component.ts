@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Cast } from 'src/app/movies/interface/actors';
 import { SerieDescription } from '../../interface/serie-description';
 import { NetflixService } from '../../netflix.service';
@@ -8,9 +8,10 @@ import { NetflixService } from '../../netflix.service';
   templateUrl: './infos-serie.component.html',
   styleUrls: ['./infos-serie.component.css']
 })
-export class InfosSerieComponent implements OnInit {
+export class InfosSerieComponent implements OnInit, OnChanges {
   @Input() serieId!: number;
   @Input() serieVote?: number;
+  @Input() widthImage?: boolean;
 
   serie?: SerieDescription;
   actors?: Cast[];
@@ -28,12 +29,14 @@ export class InfosSerieComponent implements OnInit {
   constructor(private netflixService: NetflixService) { }
 
   ngOnInit() {
-    this.netflixService.getSeriesById(this.serieId).subscribe(serie => {
-      this.serie = serie;
-      this.selected = serie.seasons[0].season_number;
-      this.episode = this.changeSelect(serie.seasons[0].season_number)
-    });
-    this.netflixService.getActorsbySerie(this.serieId).subscribe(actors => this.actors = actors.cast);
+    if(this.widthImage) {
+      this.urlBaseImage = "https://image.tmdb.org/t/p/w1280";
+    }
+    this.callService();
+  }
+
+  ngOnChanges() {
+    this.callService();
   }
 
   changeSelect(selected:number) {
@@ -44,4 +47,12 @@ export class InfosSerieComponent implements OnInit {
     this.status = !this.status;
   }
 
+  callService() {
+    this.netflixService.getSeriesById(this.serieId).subscribe(serie => {
+      this.serie = serie;
+      this.selected = serie.seasons[0].season_number;
+      this.episode = this.changeSelect(serie.seasons[0].season_number)
+    });
+    this.netflixService.getActorsbySerie(this.serieId).subscribe(actors => this.actors = actors.cast);
+  }
 }

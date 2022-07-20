@@ -1,0 +1,21 @@
+.top-series-body {
+   position: relative;
+   background-color: #141414;
+   min-height: 100vh;
+   overflow: hidden;
+   max-width: 100%;
+}
+
+.top-series {
+   padding-top: 100px;
+   padding: 100px 0 0 4%;
+}
+
+h1 {
+   font-size: 1.4vw !important;
+   margin-left: 12px;
+}
+
+.infos-serie {
+   margin-top: 100px;
+}

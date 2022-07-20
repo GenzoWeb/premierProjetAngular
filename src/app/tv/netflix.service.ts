@@ -19,8 +19,7 @@ export class NetflixService {
     return this.http.get<Series>(`https://api.themoviedb.org/3/tv/popular?api_key=${this.APIKey}&language=fr-FR`).pipe(
       map(series => series.results),
       map(series => series.filter((serie:Serie) => serie.backdrop_path !== null)),
-      map(series => series[Math.abs((Math.floor(Math.random() * series.length - 1)))]),
-      tap((response) => this.log(response))
+      map(series => series[Math.abs((Math.floor(Math.random() * series.length - 1)))])
     )
   }
 
@@ -44,19 +43,23 @@ export class NetflixService {
 
   getGenresListTv(): Observable<GenreTv[]> {
     return this.http.get<Serie>(`https://api.themoviedb.org/3/genre/tv/list?api_key=${this.APIKey}&language=fr-FR`).pipe(
-      map(series => series.genres),
-      tap((response) => this.log(response))
+      map(series => series.genres)
     )
   }
 
   getSeriesByGenres(id:number): Observable<Serie[]> {
     return this.http.get<Series>(`https://api.themoviedb.org/3/discover/tv?api_key=${this.APIKey}&with_genres=${id}&language=fr-FR`).pipe(
-      map(series => series.results),
-      tap((response) => this.log(response))
+      map(series => series.results)
+    )
+  }
+
+  getSeriesTop():Observable<Serie[]> {
+    return this.http.get<Series>(`https://api.themoviedb.org/3/tv/top_rated?api_key=${this.APIKey}&language=fr-FR`).pipe(
+      map(series => series.results)
     )
   }
 
   private log(response: any) {
-    console.table(response);
+    console.table('response');
   }
 }

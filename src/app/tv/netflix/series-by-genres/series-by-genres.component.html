@@ -1,54 +1,7 @@
 <div *ngIf="series" else elseBlockContent class="series-by-genres mb-3">
    <h3 class="name-genre">{{ genreName }}</h3>
-   <div class="slider-wrap" (mouseenter)="toggleArrow()" (mouseleave)="toggleArrow()">
-      <div [ngClass]="{'div-z-index': Zindex}" class="slider-main" appSlider 
-      [(currentImage)]='currentImage' 
-      [imageWidth]='imageWidth' 
-      [itemsClone]='itemsClone'
-      (numberImageSlide)="numberImageSlideReceived($event)"
-      (sliderElement)="sliderElementReceived($event)"
-      >
-         <div *ngFor=" let serie of series">
-            <div class="images-genre" *ngIf="serie.poster_path" appEffectZoomImg (mouseenter)="addZindex()" (mouseleave)="removeZindex()">
-               <img class="images-genre-img" src="{{ urlBaseImageGenre }}{{ serie.poster_path }}" alt="image épisode" (click)="serieSend(serie)">
-               <div class="images-genre-zoom" (click)="serieSend(serie)">
-                  <div *ngIf="serie.poster_path">
-                     <img src="{{ urlBaseImageGenre }}{{ serie.poster_path }}" alt="image épisode">
-                  </div>
-                  <div class="text-effect-img p-2">
-                     <p class="title-effect">{{ serie.name }}</p>
-                     <p *ngIf="serie.overview">{{ serie.overview | truncateText}}</p>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
-      <div>
-         <button [ngClass]="{'d-none': !arrowLeft}" class="left arrow-slider">
-            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16" appPrev
-            [imageWidth]='imageWidth' 
-            [currentImage]='currentImage' 
-            [slideVisible]='slideVisible' 
-            [slider]='slider'
-            (click)="goLeft()"
-            >
-               <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
-            </svg>
-         </button>
-         <button [ngClass]="{'d-none': !arrowRight}" class="right arrow-slider" 
-         >
-            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16" appNext
-            [currentImage]='currentImage' 
-            [slideVisible]='slideVisible'
-            [slider]='slider'
-            [itemsClone]='itemsClone'
-            (imageWidth)="imageWidthReceived($event)" 
-            (click)="goRight()"
-            >
-               <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
-            </svg>
-         </button>
-      </div>
+   <div *ngIf="series">
+      <app-slider-series [series]="series" (sendSerie)="receiveSerie($event)"></app-slider-series>
    </div>
 </div>
 
