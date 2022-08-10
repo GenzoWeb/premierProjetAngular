@@ -1,0 +1,44 @@
+<app-netflix-navbar (sendToggleInfos)="receiveToggleInfos($event)"></app-netflix-navbar>
+<div *ngIf="!toggleInfos">
+   <div class="favorite-body">
+      <div *ngIf="moreInfos">
+         <div class="more-infos">
+            <div class="opacity_info" (click)="moreInfos = false"></div>
+         </div>
+      </div>
+      <div class="favorite container">
+         <div *ngIf="favorites && favorites.length > 0; else elseBlockEmpty">
+            <div *ngIf="!moreInfos">
+               <h2 class="mb-5">Mes favoris</h2>
+               <div *ngFor="let favorite of favorites; let index = index">
+                  <div class="d-flex justify-content-between align-items-center">
+                     <img class="cursor" (click)="serieInfos(favorite)" src="{{ urlBaseImage }}{{ favorite.poster_path }}" alt="image cinema" />
+                     <p class="cursor title-serie" (click)="serieInfos(favorite)" >{{ favorite.name }}</p>
+                     <span class="delete" (click)="deleteFavorite(index)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red" class="bi bi-trash3" viewBox="0 0 16 16">
+                           <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+                        </svg>
+                     </span>
+                  </div>
+                  <hr>
+               </div>
+            </div>
+         </div>
+         <div *ngIf="moreInfos">
+            <h2 class="mb-5">Infos sur {{ serieName }}</h2>
+            <div class="more-infos-content my-4 pb-4">
+               <div class="close-infos-content" (click)="moreInfos = false">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" data-uia="previewModal-closebtn" role="button" aria-label="close" tabindex="0"><path fill-rule="evenodd" clip-rule="evenodd" d="M2.29297 3.70706L10.5859 12L2.29297 20.2928L3.70718 21.7071L12.0001 13.4142L20.293 21.7071L21.7072 20.2928L13.4143 12L21.7072 3.70706L20.293 2.29285L12.0001 10.5857L3.70718 2.29285L2.29297 3.70706Z" fill="currentColor"></path></svg>
+               </div>
+               <app-infos-serie [serieId]="serieId" [serieVote]="serieVote" [widthImage]="widthImage"></app-infos-serie>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+
+<ng-template #elseBlockEmpty>
+   <h2 class="text-center">Aucune série dans vos favoris</h2>
+</ng-template>
+
+

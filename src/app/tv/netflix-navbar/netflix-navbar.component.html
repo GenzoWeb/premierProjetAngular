@@ -14,22 +14,45 @@
                <a class="nav-link" [routerLink]="'/netflix/top'" (click)="isMenuCollapsed = true">Séries les mieux notées</a>
             </li>
             <li class="nav-item">
-               <a class="nav-link" [routerLink]="'.'" (click)="isMenuCollapsed = true">Ma liste</a>
+               <a class="nav-link" [routerLink]="'/netflix/favoris'" (click)="isMenuCollapsed = true">Ma liste</a>
             </li>
          </ul>
       </div>
    </div>
    <div class="flex-row-reverse nav-secondary-netflix">
-      <ul class="d-flex">
-         <li class="nav-item active">
-            <a class="nav-link px-1 mx-2" [routerLink]="'.'">
+      <ul class="d-flex secondary-nav ps-0">
+         <li class="nav-item d-flex li-search">
+            <div  class="search">
+               <input 
+                  type="text"
+                  placeholder="Rechercher une série"
+                  #search
+                  class="search-bar"
+                  [ngClass]="{'search-bar-active' : searchBar}"
+                  (keyup)="searchSerie(search.value)"
+                  (focus)="seriesList = true"
+               />
+               <div *ngIf="seriesList && (searchResults$ | async) as listSeries">
+                  <div *ngIf="listSeries.length > 0">
+                     <div class="close-list-series" (click)="seriesList = false">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" data-uia="previewModal-closebtn" role="button" aria-label="close" tabindex="0"><path fill-rule="evenodd" clip-rule="evenodd" d="M2.29297 3.70706L10.5859 12L2.29297 20.2928L3.70718 21.7071L12.0001 13.4142L20.293 21.7071L21.7072 20.2928L13.4143 12L21.7072 3.70706L20.293 2.29285L12.0001 10.5857L3.70718 2.29285L2.29297 3.70706Z" fill="currentColor"></path></svg>
+                     </div>
+                     <ul class="list-series mt-3 p-3 pt-0">
+                        <li *ngFor="let serie of listSeries">
+                           <a (click)="serieInfos(serie); seriesList = false">{{ serie.name }} <span *ngIf="serie.name !== serie.original_name">({{ serie.original_name }})</span></a>
+                        </li>
+                     </ul> 
+                  </div>
+               </div>
+            </div>
+            <a class="nav-link search-icon px-1 mx-2" (click)="searchBar = true">
                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                   <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
                </svg>
             </a>
          </li>
          <li class="nav-item">
-            <a class="nav-link px-1 mx-2" [routerLink]="'.'">
+            <a class="nav-link px-1 mx-2">
                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
                   <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
                   <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
@@ -37,11 +60,20 @@
             </a>
          </li>
          <li class="nav-item">
-            <a class="nav-link px-1 mx-2" [routerLink]="'/'">Quitter</a>
+            <a class="nav-link px-1 mx-2" [routerLink]="'/film'">Quitter</a>
          </li>
       </ul>
    </div>
 </nav>
+<div *ngIf="moreInfos" class="container infos-serie">
+   <div class="title-infos">
+         <div class="close-infos-content" (click)="closeInfos()">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" data-uia="previewModal-closebtn" role="button" aria-label="close" tabindex="0"><path fill-rule="evenodd" clip-rule="evenodd" d="M2.29297 3.70706L10.5859 12L2.29297 20.2928L3.70718 21.7071L12.0001 13.4142L20.293 21.7071L21.7072 20.2928L13.4143 12L21.7072 3.70706L20.293 2.29285L12.0001 10.5857L3.70718 2.29285L2.29297 3.70706Z" fill="currentColor"></path></svg>
+         </div>
+      <h2 class="mb-5">Infos sur {{ serieName }}</h2>
+   </div>
+   <app-infos-serie [serieId]="serieId" [serieVote]="serieVote" [widthImage]="widthImage"></app-infos-serie>
+</div>
 
 <ng-template #elseBlockNav>
    <button class="navbar-toggler" type="button">Parcourir</button>
@@ -55,7 +87,7 @@
             <a class="nav-link" [routerLink]="'/netflix/top'" (click)="isMenuCollapsed = true">Séries les mieux notées</a>
          </li>
          <li class="nav-item">
-            <a class="nav-link" [routerLink]="'.'" (click)="isMenuCollapsed = true">Ma liste</a>
+            <a class="nav-link" [routerLink]="'/netflix/favoris'" (click)="isMenuCollapsed = true">Ma liste</a>
          </li>
       </ul>
    </div>

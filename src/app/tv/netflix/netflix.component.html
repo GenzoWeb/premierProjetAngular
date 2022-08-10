@@ -1,60 +1,77 @@
-<app-netflix-navbar></app-netflix-navbar>
-<div *ngIf="serie">
-   <div class="netflix-body" [ngClass]="moreInfos? 'netflix-body-fixed' : ''">
-      <div *ngIf="moreInfos" class="more-infos">
-         <div class="opacity_info" (click)="moreInfos = false"></div>
-      </div>
-      <div class="cover">
-         <div class="img-cover">
-            <img src="{{ urlBaseImage }}{{ serie.backdrop_path }}" alt="image cinema">
-            <div class="cloudy"></div>
-            <div class="vote-cover" *ngIf="serie.vote_average">{{ serie.vote_average }}</div>
+<app-netflix-navbar (sendToggleInfos)="receiveToggleInfos($event)"></app-netflix-navbar>
+<div *ngIf="!toggleInfos">
+   <div *ngIf="serie; else elseBlock">
+      <div class="netflix-body" [ngClass]="moreInfos? 'netflix-body-fixed' : ''">
+         <div *ngIf="moreInfos" class="more-infos">
+            <div class="opacity_info" (click)="moreInfos = false"></div>
          </div>
-         <div class="text-img-cover p-4 ms-4">
-            <p class="title-cover">{{serie.name}}</p>
-            <div class="overview-cover" *ngIf="serie.overview ; else elseBlockOverview">
-               <p>{{ serie.overview | truncateText }} ...</p>
-               <div>
-                  <button type="button" class="button-cover btn btn-light me-2 mb-2" (click)="moreInfos = true; serieId = serie.id; serieVote = serie.vote_average">
-                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
-                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                        <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
-                     </svg>
-                     <span>plus d'infos</span>
-                  </button>
-                  <button type="button" class="button-cover btn btn-secondary mb-2">
-                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
-                        <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
-                     </svg>
-                     <span>Ajouter</span>
-                  </button>
+         <div class="cover">
+            <div class="img-cover">
+               <img src="{{ urlBaseImage }}{{ serie.backdrop_path }}" alt="image cinema">
+               <div class="cloudy"></div>
+               <div class="vote-cover" *ngIf="serie.vote_average">{{ serie.vote_average }}</div>
+            </div>
+            <div class="text-img-cover p-4 ms-4">
+               <p class="title-cover">{{serie.name}}</p>
+               <div class="overview-cover" *ngIf="serie.overview; else elseBlockOverview">
+                  <p>{{ serie.overview | truncateText }} ...</p>
+                  <div>
+                     <button type="button" class="button-cover btn btn-light me-2 mb-2" (click)="moreInfos = true; serieId = serie.id; serieVote = serie.vote_average">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
+                           <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                           <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                        </svg>
+                        <span class="ms-1">plus d'infos</span>
+                     </button>
+                        <button *ngIf="!favorite; else elseBlockButtonFavorite" type="button" class="button-cover btn btn-secondary mb-2" (click)="addFavorites(serie)">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                              <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+                           </svg>
+                           <span class="ms-1">Ajouter</span>
+                        </button>
+                  </div>
                </div>
             </div>
          </div>
-      </div>
-      <div *ngIf="genres">
-         <div *ngFor="let genre of genres">
-            <app-series-by-genres [genreId]="genre.id" [genreName]="genre.name" (sendSerie)="receiveSerie($event)" ></app-series-by-genres>
+         <div *ngIf="genres">
+            <div *ngFor="let genre of genres">
+               <app-series-by-genres [genreId]="genre.id" [genreName]="genre.name" (sendSerie)="receiveSerie($event)" ></app-series-by-genres>
+            </div>
          </div>
       </div>
-   </div>
-   <div *ngIf="moreInfos" class="more-infos">
-      <div class="more-infos-content my-4 pb-4">
-         <div class="close-infos-content" (click)="moreInfos = false">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" data-uia="previewModal-closebtn" role="button" aria-label="close" tabindex="0"><path fill-rule="evenodd" clip-rule="evenodd" d="M2.29297 3.70706L10.5859 12L2.29297 20.2928L3.70718 21.7071L12.0001 13.4142L20.293 21.7071L21.7072 20.2928L13.4143 12L21.7072 3.70706L20.293 2.29285L12.0001 10.5857L3.70718 2.29285L2.29297 3.70706Z" fill="currentColor"></path></svg>
+      <div *ngIf="moreInfos" class="more-infos">
+         <div class="more-infos-content my-4 pb-4">
+            <div class="close-infos-content" (click)="moreInfos = false">
+               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" data-uia="previewModal-closebtn" role="button" aria-label="close" tabindex="0"><path fill-rule="evenodd" clip-rule="evenodd" d="M2.29297 3.70706L10.5859 12L2.29297 20.2928L3.70718 21.7071L12.0001 13.4142L20.293 21.7071L21.7072 20.2928L13.4143 12L21.7072 3.70706L20.293 2.29285L12.0001 10.5857L3.70718 2.29285L2.29297 3.70706Z" fill="currentColor"></path></svg>
+            </div>
+            <app-infos-serie [serieId]="serieId" [serieVote]="serieVote"></app-infos-serie>
          </div>
-         <app-infos-serie [serieId]="serieId" [serieVote]="serieVote"></app-infos-serie>
       </div>
    </div>
 </div>
 
+<ng-template #elseBlock>
+   <div class="loading">
+      <div class="spinner-border" role="status"></div>
+   </div>
+</ng-template>
+
 <ng-template #elseBlockOverview>
-   <div class="overview-cover">
-      <button type="button" class="btn btn-secondary">
+   <div *ngIf="!favorite; else elseBlockButtonFavorite" class="overview-cover">
+      <button type="button" class="btn btn-secondary" (click)="addFavorites(serie)">
          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
             <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
          </svg>
-         Ma liste
+         <span class="ms-1">Ajouter</span>
       </button>
    </div>
+</ng-template>
+
+<ng-template #elseBlockButtonFavorite>
+   <button type="button" class="button-cover btn btn-secondary mb-2" (click)="addFavorites(serie)">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+         <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+       </svg>
+      <span class="ms-1">Supprimer</span>
+   </button>
 </ng-template>

@@ -1,0 +1,67 @@
+.favorite-body {
+   position: relative;
+   background-color: #141414;
+   min-height: 100vh;
+   overflow: hidden;
+   max-width: 100%;
+}
+
+.favorite {
+   padding-top: 100px;
+}
+
+.delete {
+   cursor: pointer;
+}
+
+.cursor {
+   cursor: pointer;
+}
+
+.title-serie {
+   margin: unset;
+}
+
+.more-infos-content {
+   width: 850px;
+   border-radius: 6px;
+   background-color: #181818;
+   position: relative;
+   z-index: 30;
+   overflow: hidden;
+}
+
+.opacity_info {
+   position: absolute;
+   width: 100%;
+   height: 100%;
+   background: rgba(0, 0, 0, 0.3);
+   z-index: 20;
+}
+
+.more-infos-content {
+   width: 850px;
+   border-radius: 6px;
+   background-color: #181818;
+   position: relative;
+   z-index: 30;
+   overflow: hidden;
+   margin: auto;
+}
+
+.close-infos-content {
+   position: absolute;
+   right: 0;
+   top: 0;
+   cursor: pointer;
+   margin: 1em;
+   z-index: 30;
+}
+
+.close-infos-content svg {
+   width: 36px;
+   height: 36px;
+   background-color: #181818;
+   border-radius: 50%;
+   padding: 8px;
+}

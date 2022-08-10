@@ -92,4 +92,14 @@ export class SliderSeriesComponent implements OnInit {
     this.series = series;
   }
 
+  addFavorite(serie: Serie): boolean {
+    this.toggleArrow();
+    this.netflixService.addSerie(serie);
+    return this.netflixService.favoriteExist(serie.id);
+  }
+
+  testFavorite(id: number): boolean {
+    return this.netflixService.favoriteExist(id);
+  }
+
 }

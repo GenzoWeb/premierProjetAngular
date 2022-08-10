@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { Cast } from 'src/app/movies/interface/actors';
 import { SerieDescription } from '../../interface/serie-description';
 import { NetflixService } from '../../netflix.service';
@@ -32,7 +32,6 @@ export class InfosSerieComponent implements OnInit, OnChanges {
     if(this.widthImage) {
       this.urlBaseImage = "https://image.tmdb.org/t/p/w1280";
     }
-    this.callService();
   }
 
   ngOnChanges() {
@@ -51,7 +50,7 @@ export class InfosSerieComponent implements OnInit, OnChanges {
     this.netflixService.getSeriesById(this.serieId).subscribe(serie => {
       this.serie = serie;
       this.selected = serie.seasons[0].season_number;
-      this.episode = this.changeSelect(serie.seasons[0].season_number)
+      this.episode = this.changeSelect(serie.seasons[0].season_number);
     });
     this.netflixService.getActorsbySerie(this.serieId).subscribe(actors => this.actors = actors.cast);
   }

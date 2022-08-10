@@ -28,7 +28,7 @@ export class MoviesService {
     )
   }
 
-  getMovieById(id:number): Observable<Movie> {
+  getMovieById(id: number): Observable<Movie> {
     return this.http.get<Movie>(`https://api.themoviedb.org/3/movie/${id}?api_key=${this.APIKey}&language=fr-FR`).pipe(
       tap((response) => this.log(response))
     )
@@ -40,19 +40,19 @@ export class MoviesService {
     )
   }
 
-  getActorsbyMovie(id:number): Observable<Actors> {
+  getActorsbyMovie(id: number): Observable<Actors> {
     return this.http.get<Actors>(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=${this.APIKey}&language=fr-FR`).pipe(
       tap((response) => this.log(response))
     )
   }
 
-  getVideosMovie(id:number): Observable<Movie> {
+  getVideosMovie(id: number): Observable<Movie> {
     return this.http.get<Movie>(`https://api.themoviedb.org/3/movie/${id}/videos?api_key=${this.APIKey}&language=fr-FR`).pipe(
       tap((response) => this.log(response))
     )
   }
 
-  private dateSet(param:boolean = false): string {
+  private dateSet(param: boolean = false): string {
     let month: number = new Date().getMonth() + 1;
     let year: number = new Date().getFullYear();
 
@@ -79,7 +79,7 @@ export class MoviesService {
     return end;
   }
 
-  private previousMonth(month:number): number {
+  private previousMonth(month: number): number {
     let prevMonth: number = month - 1;
     if (prevMonth == 0) {
       prevMonth = 12
@@ -87,7 +87,7 @@ export class MoviesService {
     return prevMonth
   }
 
-  private nextMonth(month:number): number {
+  private nextMonth(month: number): number {
     let next: number = month + 1;
     if (next == 13) {
       next = 1

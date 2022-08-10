@@ -1,14 +1,16 @@
-<app-netflix-navbar></app-netflix-navbar>
-<div class="top-series-body">
-   <div class="top-series">
-      <h1 class="mb-4">Séries les mieux notées</h1>
-      <div *ngIf="series else elseBlockContent">
-         <app-slider-series [series]="series" (sendSerie)="receiveSerie($event)"></app-slider-series>
+<app-netflix-navbar (sendToggleInfos)="receiveToggleInfos($event)"></app-netflix-navbar>
+<div *ngIf="!toggleInfos">
+   <div class="top-series-body">
+      <div class="top-series">
+         <h2 class="mb-4">Séries les mieux notées</h2>
+         <div *ngIf="series else elseBlockContent">
+            <app-slider-series [series]="series" (sendSerie)="receiveSerie($event)"></app-slider-series>
+         </div>
       </div>
-   </div>
-   <div *ngIf="serieId">
-      <div class='infos-serie container'>
-         <app-infos-serie [serieId]="serieId" [serieVote]="serieVote" [widthImage]="widthImage"></app-infos-serie>
+      <div *ngIf="serieId">
+         <div class='infos-serie container'>
+            <app-infos-serie [serieId]="serieId" [serieVote]="serieVote" [widthImage]="widthImage"></app-infos-serie>
+         </div>
       </div>
    </div>
 </div>

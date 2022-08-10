@@ -1,5 +1,5 @@
 <div class="container my-3">
-   <h1 class="text-center"><a class="title-app" [routerLink]="'/'">Angular Movie App</a></h1>
+   <h1 class="text-center"><a class="title-app" [routerLink]="'/film'">Angular Movie App</a></h1>
    <nav class="navbar navbar-expand-lg mb-3 navbar-app">
      <div class="container-fluid px-5 flex-row-reverse">
        <button [ngClass]="isMenuCollapsed ? 'collapsed' : 'collapse'" class="navbar-toggler d-flex d-lg-none flex-column justify-content-around" type="button" (click)="isMenuCollapsed = !isMenuCollapsed">
@@ -10,7 +10,7 @@
        <div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse flex-row-reverse">
          <ul class="navbar-nav text-center">
            <li [ngClass]="modifClassNav ? 'nav-bg-small-screen' : ''" class="nav-item p-2"> 
-             <a class="nav-link d-inline py-0" [routerLink]="'/'" (click)="isMenuCollapsed = true">Films</a>
+             <a class="nav-link d-inline py-0" [routerLink]="'/film'" (click)="isMenuCollapsed = true">Films</a>
            </li>
            <li [ngClass]="modifClassNav ? 'nav-bg-small-screen' : ''" class="nav-item p-2">
              <a class="nav-link d-inline py-0" [routerLink]="'/netflix'" (click)="isMenuCollapsed = true">Netflix</a>

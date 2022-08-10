@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { GenreTv, Serie } from '../interface/series';
+import { Serie } from '../interface/series';
 import { NetflixService } from '../netflix.service';
 
 @Component({
@@ -16,11 +16,16 @@ export class NetflixComponent implements OnInit {
   serieId!: number;
   serieVote?: number;
   genres?: any;
+  favorite: boolean = true;
+  toggleInfos?: boolean;
 
   constructor(private netflixService: NetflixService) { }
 
   ngOnInit() {
-    this.netflixService.getSeries().subscribe(serie => this.serie = serie);
+    this.netflixService.getSerieRandom().subscribe(serie => {
+      this.serie = serie;
+      this.favorite = this.netflixService.favoriteExist(serie.id)
+    });
     this.netflixService.getGenresListTv().subscribe(genres => this.genres = genres);
   }
 
@@ -30,4 +35,11 @@ export class NetflixComponent implements OnInit {
     this.moreInfos = true;
   }
 
+  addFavorites(serie:any) {
+    this.favorite = this.netflixService.addSerie(serie);
+  } 
+
+  receiveToggleInfos(bool: boolean) {
+    this.toggleInfos = bool;
+  }
 }

@@ -13,6 +13,7 @@ export class SeriesTopViewsComponent implements OnInit {
   widthImage: boolean = true;
   serieId!: number;
   serieVote?: number; 
+  toggleInfos?: boolean;
 
   constructor( private netflixService: NetflixService) { }
 
@@ -23,5 +24,9 @@ export class SeriesTopViewsComponent implements OnInit {
   receiveSerie(serie:Serie) {
     this.serieId = serie.id;
     this.serieVote = serie.vote_average;
+  }
+
+  receiveToggleInfos(bool: boolean) {
+    this.toggleInfos = bool;
   }
 }

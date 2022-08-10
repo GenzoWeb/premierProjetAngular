@@ -1,4 +1,7 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
+import { debounceTime, distinctUntilChanged, Observable, Subject, switchMap } from 'rxjs';
+import { Serie } from '../interface/series';
+import { NetflixService } from '../netflix.service';
 
 @Component({
   selector: 'app-netflix-navbar',
@@ -7,11 +10,23 @@ import { Component, HostListener, OnInit } from '@angular/core';
 })
 export class NetflixNavbarComponent implements OnInit {
 
+  @Output()
+  sendToggleInfos: EventEmitter<boolean> = new EventEmitter<boolean>();
+
   isMenuCollapsed: boolean = true;
   logoNetflix: string = "assets/images/logo.png";
   size: boolean | undefined;
+  searchBar: boolean = false;
+  searchTerms = new Subject<string>();
+  searchResults$?: Observable<Serie[]>;
+  seriesList: boolean = true;
+  moreInfos: boolean = false;
+  serieId!: number;
+  serieVote?: number;
+  serieName!: string;
+  widthImage: boolean = true;
   
-  constructor() { }
+  constructor( private netflixService: NetflixService) { }
 
   ngOnInit() {
     if(window.innerWidth < 992) {
@@ -19,6 +34,13 @@ export class NetflixNavbarComponent implements OnInit {
     } else {
       this.size = false;
     }
+    
+    this.searchResults$ = this.searchTerms.pipe(
+      debounceTime(400),
+      distinctUntilChanged(),
+      switchMap(term => this.netflixService.seriesSearchList(term))
+    );
+    this.closeInfos()
   }
 
   @HostListener('window:resize') onResize() {
@@ -27,5 +49,22 @@ export class NetflixNavbarComponent implements OnInit {
     } else {
       this.size = false;
     }
+  }
+
+  searchSerie(term: string) {
+    this.searchTerms.next(term);
+  }
+
+  closeInfos() {
+    this.sendToggleInfos.emit(false);
+    this.moreInfos = false;
+  }
+
+  serieInfos(serie: Serie) {
+    this.moreInfos = true;
+    this.serieId = serie.id;
+    this.serieVote = serie.vote_average;
+    this.serieName = serie.name;
+    this.sendToggleInfos.emit(true);
   }
 }

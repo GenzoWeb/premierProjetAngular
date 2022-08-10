@@ -1,12 +1,6 @@
-<div *ngIf="series" else elseBlockContent class="series-by-genres mb-3">
+<div *ngIf="series" class="series-by-genres mb-3">
    <h3 class="name-genre">{{ genreName }}</h3>
    <div *ngIf="series">
       <app-slider-series [series]="series" (sendSerie)="receiveSerie($event)"></app-slider-series>
    </div>
 </div>
-
-<ng-template #elseBlockContent>
-   <div class="loading">
-      <div class="spinner-border" role="status"></div>
-   </div>
-</ng-template>
