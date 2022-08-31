@@ -14,7 +14,7 @@ export class NetflixNavbarComponent implements OnInit {
   sendToggleInfos: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   isMenuCollapsed: boolean = true;
-  logoNetflix: string = "assets/images/logo.png";
+  logoNetflix: string = "/projet9/assets/images/logo.png";
   size: boolean | undefined;
   searchBar: boolean = false;
   searchTerms = new Subject<string>();

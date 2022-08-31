@@ -11,7 +11,7 @@ export class NetflixComponent implements OnInit {
 
   serie?: Serie;
   urlBaseImage: string = "https://image.tmdb.org/t/p/original";
-  urlTestImage: string = "assets/images/cinema.jpg";
+  urlTestImage: string = "/projet9/assets/images/cinema.jpg";
   moreInfos: boolean = false;
   serieId!: number;
   serieVote?: number;

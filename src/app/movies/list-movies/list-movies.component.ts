@@ -12,7 +12,7 @@ export class ListMoviesComponent implements OnInit {
   movies?: Movie[];
   genresTest?: Genre[];
   urlBaseImage: string = "https://image.tmdb.org/t/p/w500";
-  urlTestImage: string = "assets/images/cinema.jpg";
+  urlTestImage: string = "/projet9/assets/images/cinema.jpg";
   documentary: number = 0;
 
   constructor(private moviesService: MoviesService) {}

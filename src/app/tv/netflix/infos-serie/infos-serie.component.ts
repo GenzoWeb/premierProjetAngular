@@ -17,7 +17,7 @@ export class InfosSerieComponent implements OnInit, OnChanges {
   actors?: Cast[];
   urlBaseImage: string = "https://image.tmdb.org/t/p/w500";
   urlBaseImageSeason: string = "https://image.tmdb.org/t/p/w92";
-  urlTestImage: string = "assets/images/cinema.jpg";
+  urlTestImage: string = "/projet9/assets/images/cinema.jpg";
   selected!: number;
   nameSeason!: string;
   collapsed:boolean = true;
