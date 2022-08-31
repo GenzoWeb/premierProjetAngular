@@ -34,8 +34,18 @@
             </div>
          </div>
          <div *ngIf="genres">
-            <div *ngFor="let genre of genres">
-               <app-series-by-genres [genreId]="genre.id" [genreName]="genre.name" (sendSerie)="receiveSerie($event)" ></app-series-by-genres>
+            <div *ngFor="let genre of genres; let index = index">
+               <div *ngIf="!testDisplayed">
+                  <div *ngIf="numberListGenre > index">
+                     <app-series-by-genres [genreId]="genre.id" [genreName]="genre.name" (sendSerie)="receiveSerie($event)"></app-series-by-genres>
+                  </div>
+               </div>
+               <div *ngIf="testDisplayed">
+                  <app-series-by-genres [genreId]="genre.id" [genreName]="genre.name" (sendSerie)="receiveSerie($event)"></app-series-by-genres>
+               </div>
+            </div>
+            <div *ngIf="numberListGenre < genres.length && !testDisplayed" class="loading-list">
+               <div class="spinner-border" role="status"></div>
             </div>
          </div>
       </div>

@@ -25,6 +25,10 @@
    color: var(--secondary-color) !important;
 }
 
+.active {
+   color: var(--secondary-color);
+}
+
 .nav-secondary-netflix {
    position: absolute;
    right: 50px;

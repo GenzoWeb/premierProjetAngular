@@ -38,5 +38,4 @@ export class FavoritesComponent implements OnInit {
   receiveToggleInfos(bool: boolean) {
     this.toggleInfos = bool;
   }
-
 }

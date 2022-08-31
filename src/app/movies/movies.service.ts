@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable, tap } from 'rxjs';
+import { Router } from '@angular/router';
+import { catchError, map, Observable } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 import { Actors } from './interface/actors';
@@ -15,7 +16,10 @@ export class MoviesService {
 
   APIKey: string = environment.APIKey;
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private router: Router
+  ) { }
 
   getMovies(): Observable<Movie[]> {
     const startDate: string = this.dateSet(true);
@@ -24,31 +28,31 @@ export class MoviesService {
     return this.http.get<MoviesList>(`https://api.themoviedb.org/3/movie/popular?api_key=${this.APIKey}&primary_release_date.gte=${startDate}-20&primary_release_date.lte=${endDate}-25&language=fr-FR`).pipe(
       map(movies => movies.results.sort((a:any,b:any) => 
         new Date(b.release_date).getTime() - new Date(a.release_date).getTime())),
-      tap((response) => this.log(response))
+      catchError(() => { return this.errorCatch() })
     )
   }
 
   getMovieById(id: number): Observable<Movie> {
     return this.http.get<Movie>(`https://api.themoviedb.org/3/movie/${id}?api_key=${this.APIKey}&language=fr-FR`).pipe(
-      tap((response) => this.log(response))
+      catchError(() => { return this.errorCatch() })
     )
   }
 
   getGenresList(): Observable<Movie> {
     return this.http.get<Movie>(`https://api.themoviedb.org/3/genre/movie/list?api_key=${this.APIKey}&language=fr-FR`).pipe(
-      tap((response) => this.log(response))
+      catchError(() => { return this.errorCatch() })
     )
   }
 
   getActorsbyMovie(id: number): Observable<Actors> {
     return this.http.get<Actors>(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=${this.APIKey}&language=fr-FR`).pipe(
-      tap((response) => this.log(response))
+      catchError(() => { return this.errorCatch() })
     )
   }
 
   getVideosMovie(id: number): Observable<Movie> {
     return this.http.get<Movie>(`https://api.themoviedb.org/3/movie/${id}/videos?api_key=${this.APIKey}&language=fr-FR`).pipe(
-      tap((response) => this.log(response))
+      catchError(() => { return this.errorCatch() })
     )
   }
 
@@ -95,7 +99,8 @@ export class MoviesService {
     return next
   }
 
-  private log(response: any) {
-    console.log(response);
+  private errorCatch() {
+    this.router.navigateByUrl("/error");
+    return [];
   }
 }

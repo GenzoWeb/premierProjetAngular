@@ -1,22 +1,40 @@
-import { Directive, ElementRef, HostListener, Renderer2 } from '@angular/core';
+import { Directive, ElementRef, HostListener, OnInit, Renderer2 } from '@angular/core';
 
 @Directive({
   selector: '[appEffectZoomImg]'
 })
-export class EffectZoomImgDirective {
+export class EffectZoomImgDirective implements OnInit {
 
   timeout:any;
+  testTouchScreen!: boolean;
 
   constructor(private el: ElementRef, private renderer: Renderer2,) { }
 
-  @HostListener('mousemove') onMouseMove() {
-    clearTimeout(this.timeout);
-    this.timeout = setTimeout( () => {
-      this.addClass('effect-image', this.el.nativeElement)
-    },700);
+  ngOnInit() {
+    this.testTouchScreen = this.touchScreen();
   }
 
-  @HostListener('mouseleave') onMouseLeave() {
+  touchScreen() {
+    try{  
+      document.createEvent("TouchEvent");  
+      return true;
+    } catch(e){  
+      return false;  
+    }
+  }
+
+  @HostListener('mousemove') 
+  onMouseMove() {
+    if(!this.testTouchScreen) {
+      clearTimeout(this.timeout);
+      this.timeout = setTimeout( () => {
+        this.addClass('effect-image', this.el.nativeElement)
+      },700);
+    }
+  }
+
+  @HostListener('mouseleave') 
+  onMouseLeave() {
     clearTimeout(this.timeout);
     this.removeClass('effect-image', this.el.nativeElement)
   }
@@ -28,5 +46,4 @@ export class EffectZoomImgDirective {
   removeClass(className: string, element: any) {
       this.renderer.removeClass(element, className);
   }
-
 }

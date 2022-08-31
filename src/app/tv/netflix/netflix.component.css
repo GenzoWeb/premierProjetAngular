@@ -3,6 +3,10 @@
    text-align: center;
 }
 
+.loading-list {
+   text-align: center;
+}
+
 .netflix-body {
    position: relative;
    background-color: #141414;

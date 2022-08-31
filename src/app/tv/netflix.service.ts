@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable, of, tap } from 'rxjs';
+import { Router } from '@angular/router';
+import { catchError, map, Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Actors } from '../movies/interface/actors';
 import { SerieDescription } from './interface/serie-description';
@@ -13,50 +14,66 @@ export class NetflixService {
 
   APIKey: string = environment.APIKey;
   favorites: Serie[] = [];
+  displayed : boolean = false;
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private router: Router
+  ) { }
 
   getSerieRandom(): Observable<Serie> {
     return this.http.get<Series>(`https://api.themoviedb.org/3/tv/popular?api_key=${this.APIKey}&language=fr-FR`).pipe(
       map(series => series.results),
       map(series => series.filter((serie:Serie) => serie.backdrop_path !== null)),
-      map(series => series[Math.abs((Math.floor(Math.random() * series.length - 1)))])
+      map(series => series[Math.abs((Math.floor(Math.random() * series.length - 1)))]),
+      catchError(() => { return this.errorCatch() })
     )
   }
 
   getSeriesById(serieId: number): Observable<SerieDescription> {
     return this.http.get<SerieDescription>(`https://api.themoviedb.org/3/tv/${serieId}?api_key=${this.APIKey}&language=fr-FR`).pipe(
-      tap((response) => this.log(response))
+      catchError(() => { return this.errorCatch() })
     )
   }
   
   getActorsbySerie(id: number): Observable<Actors> {
     return this.http.get<Actors>(`https://api.themoviedb.org/3/tv/${id}/credits?api_key=${this.APIKey}&language=fr-FR`).pipe(
-      tap((response) => this.log(response))
+      catchError(() => { return this.errorCatch() })
     )
   }
 
   getListEpisodes(id: number, season:number) {
-    return this.http.get<Serie>(`https://api.themoviedb.org/3/tv/${id}/season/${season}?api_key=${this.APIKey}&language=fr-FR&page=3`).pipe(
-      tap((response) => this.log(response))
+    return this.http.get<Serie>(`https://api.themoviedb.org/3/tv/${id}/season/${season}?api_key=${this.APIKey}&language=fr-FR`).pipe(
+      catchError(() => { return this.errorCatch() })
     )
   }
 
   getGenresListTv(): Observable<GenreTv[]> {
     return this.http.get<Serie>(`https://api.themoviedb.org/3/genre/tv/list?api_key=${this.APIKey}&language=fr-FR`).pipe(
-      map(series => series.genres)
+      map(series => series.genres),
+      catchError(() => { return this.errorCatch() })
     )
+  }
+
+  listDisplayed() {
+    this.displayed = true;
+  }
+
+  getDisplayed(): boolean {
+    return this.displayed;
   }
 
   getSeriesByGenres(id: number): Observable<Serie[]> {
     return this.http.get<Series>(`https://api.themoviedb.org/3/discover/tv?api_key=${this.APIKey}&with_genres=${id}&language=fr-FR`).pipe(
-      map(series => series.results)
+      map(series => series.results),
+      catchError(() => { return this.errorCatch() })
     )
   }
 
   getSeriesTop(): Observable<Serie[]> {
     return this.http.get<Series>(`https://api.themoviedb.org/3/tv/top_rated?api_key=${this.APIKey}&language=fr-FR`).pipe(
-      map(series => series.results)
+      map(series => series.results),
+      catchError(() => { return this.errorCatch() })
     )
   }
   
@@ -96,11 +113,12 @@ export class NetflixService {
     }
     return this.http.get<Series>(`https://api.themoviedb.org/3/search/tv?api_key=c0d32ef41d1fec3b847544ebe1ec414c&language=fr-FR&query=${searchTerm}`).pipe(
       map(series => series.results),
-      tap((response) => this.log(response))
+      catchError(() => { return this.errorCatch() })
     )
   }
 
-  private log(response: any) {
-    console.table('response');
+  private errorCatch() {
+    this.router.navigateByUrl("/error");
+    return [];
   }
 }

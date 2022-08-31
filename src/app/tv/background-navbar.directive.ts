@@ -9,7 +9,8 @@ export class BackgroundNavbarDirective {
     this.el.nativeElement.style.backgroundColor = 'transparent';
    }
 
-  @HostListener('window:scroll') scrollWindow() {
+  @HostListener('window:scroll') 
+  scrollWindow() {
     if(window.pageYOffset == 0 ) {
       this.el.nativeElement.style.backgroundColor = 'transparent';
     } else {

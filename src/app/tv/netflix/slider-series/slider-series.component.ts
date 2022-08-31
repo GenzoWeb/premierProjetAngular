@@ -15,7 +15,6 @@ export class SliderSeriesComponent implements OnInit {
   sendSerie: EventEmitter<Serie> = new EventEmitter<Serie>();
 
   urlBaseImageGenre: string = "https://image.tmdb.org/t/p/w154";
-  urlTestImage: string = "assets/images/cinema.jpg";
   begin: boolean = true;
   arrowLeft: boolean = false;
   arrowRight: boolean = false;
@@ -25,16 +24,34 @@ export class SliderSeriesComponent implements OnInit {
   itemsClone:number = 10;
   slideVisible!: number;
   slider!: HTMLElement;
+  testTouchScreen!: boolean;
 
   constructor( private netflixService : NetflixService) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.testTouchScreen = this.touchScreen();
+
+    if(this.testTouchScreen) {
+      this.toggleRight();
+    }
+  }
+
+  touchScreen() {
+    try{  
+      document.createEvent("TouchEvent");  
+      return true;
+    } catch(e){  
+      return false;  
+    }
+  }
 
   toggleArrow() {
-    if(!this.begin) {
-      this.toggleLeft();
+    if(!this.testTouchScreen) {
+      if(!this.begin) {
+        this.toggleLeft();
+      }
+      this.toggleRight();
     }
-    this.toggleRight();
   }
 
   toggleLeft(): boolean {
@@ -101,5 +118,4 @@ export class SliderSeriesComponent implements OnInit {
   testFavorite(id: number): boolean {
     return this.netflixService.favoriteExist(id);
   }
-
 }

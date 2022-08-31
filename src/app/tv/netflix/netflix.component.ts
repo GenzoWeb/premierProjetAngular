@@ -18,6 +18,8 @@ export class NetflixComponent implements OnInit {
   genres?: any;
   favorite: boolean = true;
   toggleInfos?: boolean;
+  numberListGenre: number = 1;
+  testDisplayed!: boolean;
 
   constructor(private netflixService: NetflixService) { }
 
@@ -27,6 +29,18 @@ export class NetflixComponent implements OnInit {
       this.favorite = this.netflixService.favoriteExist(serie.id)
     });
     this.netflixService.getGenresListTv().subscribe(genres => this.genres = genres);
+    this.testDisplayed = this.netflixService.getDisplayed();
+    if(!this.testDisplayed) {
+      const interval = setInterval(()=> {
+        if(this.numberListGenre < this.genres.length) {
+          this.numberListGenre += 1
+        }
+        if(this.numberListGenre == this.genres.length) {
+          this.netflixService.listDisplayed();
+          clearInterval(interval)
+        }
+      },1000)
+    }
   }
 
   receiveSerie(serie:Serie) {

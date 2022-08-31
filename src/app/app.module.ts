@@ -26,6 +26,7 @@ import { SliderDirective } from './tv/slider.directive';
 import { SeriesTopViewsComponent } from './tv/netflix/series-top-views/series-top-views.component';
 import { SliderSeriesComponent } from './tv/netflix/slider-series/slider-series.component';
 import { FavoritesComponent } from './tv/netflix/favorites/favorites.component';
+import { PageErrorComponent } from './404/page-error/page-error.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { FavoritesComponent } from './tv/netflix/favorites/favorites.component';
     SliderDirective,
     SeriesTopViewsComponent,
     SliderSeriesComponent,
-    FavoritesComponent
+    FavoritesComponent,
+    PageErrorComponent
   ],
   imports: [
     BrowserModule,
